@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Volume2 } from 'lucide-react';
 import { speak, stopSpeak } from '../services/ttsService';
 
-const TTSAudioButton = ({ text }) => {
+const TTSAudioButton = ({ text, langCode = 'ja-JP' }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
@@ -12,6 +12,7 @@ const TTSAudioButton = ({ text }) => {
     } else {
       speak(
         text,
+        langCode,
         () => setIsPlaying(true),
         () => setIsPlaying(false)
       );

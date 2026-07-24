@@ -1,4 +1,4 @@
-export const speak = (text, onStart, onEnd) => {
+export const speak = (text, langCode, onStart, onEnd) => {
   if (!('speechSynthesis' in window)) {
     console.error('Web Speech API is not supported in this browser.');
     return;
@@ -8,7 +8,7 @@ export const speak = (text, onStart, onEnd) => {
   window.speechSynthesis.cancel();
 
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'ja-JP';
+  utterance.lang = langCode;
   utterance.rate = 0.9; // Slightly slower for learning purposes
 
   // Event listeners for UI state
@@ -19,12 +19,14 @@ export const speak = (text, onStart, onEnd) => {
     if (onEnd) onEnd();
   };
 
-  // Try to find a Japanese voice
+  // Try to find a matching voice
   const setVoice = () => {
     const voices = window.speechSynthesis.getVoices();
-    const jaVoice = voices.find(voice => voice.lang.startsWith('ja'));
-    if (jaVoice) {
-      utterance.voice = jaVoice;
+    // Use substring (e.g. 'ja', 'zh', 'en') to find a voice more easily
+    const langPrefix = langCode.split('-')[0];
+    const targetVoice = voices.find(voice => voice.lang.startsWith(langPrefix));
+    if (targetVoice) {
+      utterance.voice = targetVoice;
     }
     window.speechSynthesis.speak(utterance);
   };

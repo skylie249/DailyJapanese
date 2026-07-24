@@ -4,8 +4,8 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL = 'gemini-3-flash-preview';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
 
-export const fetchDailyJapanese = async (date, level) => {
-  const cacheKey = `daily_jp_${date}_${level}`;
+export const fetchDailyContent = async (language, date, level) => {
+  const cacheKey = `daily_lang_${language}_${date}_${level}`;
   
   // 1. Check Local Storage Cache
   const cachedData = localStorage.getItem(cacheKey);
@@ -23,27 +23,28 @@ export const fetchDailyJapanese = async (date, level) => {
   }
 
   const prompt = `
-당신은 일본어 원어민 교육 전문가입니다.
-사용자의 날짜(${date})와 난이도(${level}) 조건에 맞춰 오늘의 일본어 문장 1개와 관련 단어 3~5개를 생성해주세요.
-난이도 기준: 초급(N5~N4), 중급(N3~N2), 고급(N1).
+당신은 ${language} 원어민 교육 전문가입니다.
+사용자의 날짜(${date})와 난이도(${level}) 조건에 맞춰 오늘의 ${language} 문장 1개와 관련 단어 3~5개를 생성해주세요.
+난이도 기준: 초급, 중급, 고급.
 
 반드시 아래 JSON 포맷으로만 반환하세요 (마크다운 백틱 없이 순수 JSON만 반환):
 {
   "date": "${date}",
   "level": "${level}",
+  "language": "${language}",
   "sentence": {
-    "japanese": "일본어 원문 (화면 표시용, 한자 포함)",
-    "furigana": "한자(히라가나) 형태의 루비 문자용 텍스트. 예: 私(わたし)は",
+    "original_text": "원문 (예: 일본어라면 한자 포함, 중국어라면 간체자)",
+    "reading_hint": "읽기 힌트 (예: 일본어면 후리가나/요미가나, 중국어면 병음, 영어면 발음 기호)",
     "pronunciation": "한글 발음 표기",
     "meaning": "한국어 번역",
-    "audio_text": "TTS 재생용 순수 일본어 텍스트"
+    "audio_text": "TTS 재생용 순수 텍스트 (기호 등 제외)"
   },
   "words": [
     {
       "word": "단어",
-      "reading": "읽기(히라가나)",
+      "reading": "읽기 힌트 (히라가나/병음/발음기호 등)",
       "meaning": "뜻",
-      "audio_text": "TTS 재생용"
+      "audio_text": "TTS 재생용 텍스트"
     }
   ]
 }
@@ -80,6 +81,6 @@ export const fetchDailyJapanese = async (date, level) => {
     return parsedData;
   } catch (error) {
     console.error('Error fetching data from Gemini:', error);
-    throw new Error('Failed to generate daily Japanese content.');
+    throw new Error(`Failed to generate daily ${language} content.`);
   }
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import TTSAudioButton from './TTSAudioButton';
 
-const WordCard = ({ data }) => {
+const WordCard = ({ data, langCode }) => {
   if (!data || !data.words || data.words.length === 0) return null;
 
   return (
@@ -13,10 +13,13 @@ const WordCard = ({ data }) => {
         {data.words.map((wordObj, index) => (
           <li key={index} className="word-item">
             <div className="word-info">
-              <div className="word-jp">{wordObj.word} <span className="word-reading">({wordObj.reading})</span></div>
+              <div className="word-jp">
+                {wordObj.word} 
+                {wordObj.reading && <span className="word-reading">({wordObj.reading})</span>}
+              </div>
               <div className="word-kr">{wordObj.meaning}</div>
             </div>
-            <TTSAudioButton text={wordObj.audio_text || wordObj.word} />
+            <TTSAudioButton text={wordObj.audio_text || wordObj.word} langCode={langCode} />
           </li>
         ))}
       </ul>
