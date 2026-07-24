@@ -10,9 +10,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Daily Japanese',
-        short_name: '하루 일어',
-        description: '매일 가볍게 학습하는 일본어 문장과 단어',
+        name: 'HaruBite',
+        short_name: '하루 한입',
+        description: '하루에 한 입씩 부담 없이 씹어먹는 언어',
         theme_color: '#FDFBF7',
         background_color: '#FDFBF7',
         display: 'standalone',
