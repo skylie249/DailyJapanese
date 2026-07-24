@@ -72,7 +72,9 @@ export const fetchDailyContent = async (language, date, level) => {
       }
     );
 
-    const textContent = response.data.candidates[0].content.parts[0].text;
+    let textContent = response.data.candidates[0].content.parts[0].text;
+    // Strip markdown backticks just in case the model included them
+    textContent = textContent.replace(/```json/gi, '').replace(/```/g, '').trim();
     const parsedData = JSON.parse(textContent);
 
     // 3. Save to Local Storage
@@ -81,6 +83,7 @@ export const fetchDailyContent = async (language, date, level) => {
     return parsedData;
   } catch (error) {
     console.error('Error fetching data from Gemini:', error);
-    throw new Error(`Failed to generate daily ${language} content.`);
+    const errMsg = error.response?.data?.error?.message || error.message || 'Unknown error';
+    throw new Error(`Failed to generate daily ${language} content. (${errMsg})`);
   }
 };
