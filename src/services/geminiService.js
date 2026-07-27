@@ -3,7 +3,7 @@ const MODEL = 'gemini-3.1-flash-lite';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
 
 // 통합 마스터 데이터를 불러오는 내부 함수 (하루 1회 호출)
-const fetchMasterDailyContent = async (date) => {
+export const fetchMasterDailyContent = async (date) => {
   const cacheKey = `daily_master_${date}`;
 
   // 1. Check Local Storage Cache (Next.js의 ISR 캐싱과 동일한 효과)

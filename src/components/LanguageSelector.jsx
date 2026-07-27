@@ -6,10 +6,18 @@ const languages = [
   { id: '일본어', label: '일본어', code: 'ja-JP', emoji: '🇯🇵' }
 ];
 
-const LanguageSelector = ({ onSelect }) => {
+const LanguageSelector = ({ onSelect, baseMeaning, isLoading }) => {
   return (
     <div className="language-selector-container">
-      <h2>배우고 싶은 언어를<br/>선택해 주세요</h2>
+      <h2>
+        {isLoading ? (
+          "오늘의 문장을 가져오는 중입니다..."
+        ) : baseMeaning ? (
+          `"${baseMeaning}"`
+        ) : (
+          <>배우고 싶은 언어를<br/>선택해 주세요</>
+        )}
+      </h2>
       <div className="language-list">
         {languages.map(lang => (
           <button 

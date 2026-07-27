@@ -5,7 +5,7 @@ import SentenceCard from './components/SentenceCard';
 import WordCard from './components/WordCard';
 import SkeletonCard from './components/SkeletonCard';
 import LanguageSelector from './components/LanguageSelector';
-import { fetchDailyContent } from './services/geminiService';
+import { fetchDailyContent, fetchMasterDailyContent } from './services/geminiService';
 
 function App() {
   const [date, setDate] = useState('');
@@ -15,6 +15,9 @@ function App() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  const [baseMeaning, setBaseMeaning] = useState('');
+  const [isBaseMeaningLoading, setIsBaseMeaningLoading] = useState(false);
 
   useEffect(() => {
     // Set today's date in YYYY-MM-DD format
@@ -34,6 +37,26 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const loadMasterData = async () => {
+      if (!date) return;
+      setIsBaseMeaningLoading(true);
+      try {
+        const master = await fetchMasterDailyContent(date);
+        setBaseMeaning(master.base_meaning);
+      } catch (err) {
+        console.error('Failed to load master data for base meaning:', err);
+      } finally {
+        setIsBaseMeaningLoading(false);
+      }
+    };
+    
+    // Only load if we don't have baseMeaning yet
+    if (date && !baseMeaning) {
+      loadMasterData();
+    }
+  }, [date, baseMeaning]);
+
+  useEffect(() => {
     const loadContent = async () => {
       if (!date || !selectedLanguage) return;
       
@@ -43,6 +66,9 @@ function App() {
       try {
         const result = await fetchDailyContent(selectedLanguage.id, date, level);
         setData(result);
+        if (!baseMeaning && result.base_meaning) {
+          setBaseMeaning(result.base_meaning);
+        }
       } catch (err) {
         setError(err.message || '데이터를 불러오는 데 실패했습니다.');
         console.error(err);
@@ -75,7 +101,11 @@ function App() {
   if (!selectedLanguage) {
     return (
       <div className="app-container center-content">
-        <LanguageSelector onSelect={handleLanguageSelect} />
+        <LanguageSelector 
+          onSelect={handleLanguageSelect} 
+          baseMeaning={baseMeaning} 
+          isLoading={isBaseMeaningLoading}
+        />
       </div>
     );
   }
