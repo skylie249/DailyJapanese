@@ -24,16 +24,6 @@ function App() {
     const today = new Date();
     const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     setDate(formattedDate);
-
-    // Load language from local storage
-    const savedLang = localStorage.getItem('daily_app_lang');
-    if (savedLang) {
-      try {
-        setSelectedLanguage(JSON.parse(savedLang));
-      } catch(e) {
-        console.error('Failed to parse saved language');
-      }
-    }
   }, []);
 
   useEffect(() => {
@@ -86,7 +76,6 @@ function App() {
 
   const handleLanguageSelect = (langObj) => {
     setSelectedLanguage(langObj);
-    localStorage.setItem('daily_app_lang', JSON.stringify(langObj));
     setData(null); // Clear previous data
     setError(null);
   };
