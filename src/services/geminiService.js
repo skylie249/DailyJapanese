@@ -24,7 +24,7 @@ export const fetchMasterDailyContent = async (date) => {
   const prompt = `
 [역할 및 목적]
 당신은 다국어 교육 전문가입니다.
-오늘 학습할 단 하나의 핵심 문장(한국어 기준)을 생성하고, 이를 3개 언어(영어, 일본어, 중국어) 및 각 언어별 3가지 난이도(초급, 중급, 고급)에 맞게 번역 및 변환해주세요.
+오늘 학습할 단 하나의 명언(한국어 기준)을 생성하고, 이를 3개 언어(영어, 일본어, 중국어) 및 각 언어별 3가지 난이도(초급, 중급, 고급)에 맞게 번역 및 변환해주세요.
 
 [입력 조건]
 - 대상 날짜: ${date}
@@ -112,7 +112,7 @@ export const fetchDailyContent = async (language, date, level) => {
 
   // 2. 요청한 언어와 난이도에 맞는 데이터를 추출
   const targetContent = masterData.content[language]?.[level];
-  
+
   if (!targetContent) {
     throw new Error(`해당 언어(${language}) 및 난이도(${level})의 데이터를 찾을 수 없습니다.`);
   }
