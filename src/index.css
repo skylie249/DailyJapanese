@@ -73,6 +73,13 @@ body {
   color: var(--text-color);
 }
 
+.header-subtitle {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
 .date-badge {
   background-color: var(--card-bg);
   padding: 6px 12px;
@@ -276,6 +283,16 @@ rt {
   margin-bottom: 20px;
   font-size: 14px;
   text-align: center;
+}
+
+/* Footer */
+.app-footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 32px 0 16px;
+  font-size: 13px;
+  color: #888;
+  font-weight: 500;
 }
 
 /* Skeleton Loading */

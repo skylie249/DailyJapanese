@@ -89,12 +89,21 @@ function App() {
   // If no language selected, show language selector
   if (!selectedLanguage) {
     return (
-      <div className="app-container center-content">
-        <LanguageSelector 
-          onSelect={handleLanguageSelect} 
-          baseMeaning={baseMeaning} 
-          isLoading={isBaseMeaningLoading}
+      <div className="app-container">
+        <Header 
+          date={date} 
+          title="오늘의 외국어" 
         />
+        <div style={{ margin: 'auto 0', display: 'flex', justifyContent: 'center' }}>
+          <LanguageSelector 
+            onSelect={handleLanguageSelect} 
+            baseMeaning={baseMeaning} 
+            isLoading={isBaseMeaningLoading}
+          />
+        </div>
+        <footer className="app-footer">
+          <p>행복ICT 사우분들의 매일매일 성장을 응원합니다 🚀</p>
+        </footer>
       </div>
     );
   }
@@ -124,6 +133,10 @@ function App() {
           </>
         )}
       </main>
+
+      <footer className="app-footer">
+        <p>행복ICT 사우분들의 매일매일 성장을 응원합니다 🚀</p>
+      </footer>
     </div>
   );
 }
