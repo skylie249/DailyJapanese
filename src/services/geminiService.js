@@ -1,19 +1,32 @@
+import { supabase } from '../lib/supabaseClient';
+
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL = 'gemini-3.1-flash-lite';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
 
 // 통합 마스터 데이터를 불러오는 내부 함수 (하루 1회 호출)
 export const fetchMasterDailyContent = async (date) => {
-  const cacheKey = `daily_master_${date}`;
+  // 1. Check Supabase Database
+  try {
+    const { data: cachedData, error } = await supabase
+      .from('daily_content')
+      .select('*')
+      .eq('date', date)
+      .single();
 
-  // 1. Check Local Storage Cache (Next.js의 ISR 캐싱과 동일한 효과)
-  const cachedData = localStorage.getItem(cacheKey);
-  if (cachedData) {
-    try {
-      return JSON.parse(cachedData);
-    } catch (e) {
-      console.error('Failed to parse cached data', e);
+    if (error && error.code !== 'PGRST116') {
+      console.error('Failed to fetch from Supabase:', error);
     }
+
+    if (cachedData) {
+      return {
+        date: cachedData.date,
+        base_meaning: cachedData.base_meaning,
+        content: typeof cachedData.content === 'string' ? JSON.parse(cachedData.content) : cachedData.content
+      };
+    }
+  } catch (e) {
+    console.error('Supabase select error:', e);
   }
 
   // 2. Fetch from Gemini API (하루 한 번 전체 언어/난이도 데이터 생성)
@@ -93,11 +106,33 @@ export const fetchMasterDailyContent = async (date) => {
 
     const responseData = await res.json();
     let textContent = responseData.candidates[0].content.parts[0].text;
-    textContent = textContent.replace(/```json/gi, '').replace(/```/g, '').trim();
+    
+    // Extract JSON using regex in case there is trailing/leading text
+    const jsonMatch = textContent.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      textContent = jsonMatch[0];
+    } else {
+      textContent = textContent.replace(/```json/gi, '').replace(/```/g, '').trim();
+    }
+    
     const parsedData = JSON.parse(textContent);
 
-    // 3. Save to Local Storage
-    localStorage.setItem(cacheKey, JSON.stringify(parsedData));
+    // 3. Save to Supabase
+    try {
+      const { error: insertError } = await supabase
+        .from('daily_content')
+        .upsert({
+          date: parsedData.date,
+          base_meaning: parsedData.base_meaning,
+          content: parsedData.content
+        }, { onConflict: 'date' });
+
+      if (insertError) {
+        console.error('Failed to insert into Supabase:', JSON.stringify(insertError, null, 2));
+      }
+    } catch (e) {
+      console.error('Supabase insert error:', e);
+    }
 
     return parsedData;
   } catch (error) {
