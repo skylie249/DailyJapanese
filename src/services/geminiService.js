@@ -29,7 +29,27 @@ export const fetchMasterDailyContent = async (date) => {
     console.error('Supabase select error:', e);
   }
 
-  // 2. Fetch from Gemini API (하루 한 번 전체 언어/난이도 데이터 생성)
+  // 2. Fetch past contents to prevent duplication
+  let pastMeanings = [];
+  try {
+    const { data: pastData, error: pastError } = await supabase
+      .from('daily_content')
+      .select('base_meaning')
+      .order('date', { ascending: false })
+      .limit(30);
+      
+    if (!pastError && pastData) {
+      pastMeanings = pastData.map(item => item.base_meaning).filter(Boolean);
+    }
+  } catch (e) {
+    console.error('Failed to fetch past contents:', e);
+  }
+
+  const pastMeaningsText = pastMeanings.length > 0 
+    ? `\n[주의사항]\n- 다음은 최근에 이미 학습한 명언들입니다. 절대 아래 명언들과 같거나 비슷한 명언을 생성하지 마세요:\n${pastMeanings.map((m, i) => `${i + 1}. ${m}`).join('\n')}\n`
+    : '';
+
+  // 3. Fetch from Gemini API (하루 한 번 전체 언어/난이도 데이터 생성)
   if (!API_KEY) {
     throw new Error('VITE_GEMINI_API_KEY is not set in environment variables.');
   }
@@ -38,7 +58,7 @@ export const fetchMasterDailyContent = async (date) => {
 [역할 및 목적]
 당신은 다국어 교육 전문가입니다.
 오늘 학습할 단 하나의 명언(한국어 기준)을 생성하고, 이를 3개 언어(영어, 일본어, 중국어) 및 각 언어별 3가지 난이도(초급, 중급, 고급)에 맞게 번역 및 변환해주세요.
-
+${pastMeaningsText}
 [입력 조건]
 - 대상 날짜: ${date}
 
