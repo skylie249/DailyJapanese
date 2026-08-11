@@ -52,6 +52,14 @@ const Header = ({
               <History size={18} />
             </button>
           )}
+          <button
+            className="history-btn"
+            onClick={() => setShowTranslator(true)}
+            title={t('landing.hero.translator')}
+            aria-label={t('landing.hero.translator')}
+          >
+            <Mic size={18} />
+          </button>
           {/* 로그인/로그아웃 버튼 */}
           {user ? (
             <div className="header-user">
@@ -78,14 +86,7 @@ const Header = ({
               <LogIn size={18} />
             </button>
           )}
-          <button
-            className="history-btn"
-            onClick={() => setShowTranslator(true)}
-            title={t('landing.hero.translator')}
-            aria-label={t('landing.hero.translator')}
-          >
-            <Mic size={18} />
-          </button>
+
           {onChangeLanguage && (
             <button className="change-lang-btn" onClick={onChangeLanguage} aria-label="Change Language">
               <Globe size={18} />
