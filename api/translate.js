@@ -45,8 +45,11 @@ Text to translate: "${text}"`;
       const translatedText = data.candidates[0].content.parts[0].text.trim();
       return res.status(200).json({ translatedText });
     } else {
-      console.error('Gemini API Error:', data);
-      return res.status(response.status).json({ error: data.error?.message || 'Translation failed' });
+      console.error('Gemini API Error Response:', JSON.stringify(data, null, 2));
+      return res.status(500).json({ 
+        error: data.error?.message || 'Translation failed',
+        status: response.status
+      });
     }
   } catch (error) {
     console.error('Fetch error:', error);
