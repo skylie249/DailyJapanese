@@ -411,3 +411,115 @@ rt {
 .lang-emoji {
   font-size: 24px;
 }
+
+/* History */
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.history-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.history-btn:hover {
+  background: var(--bg-color);
+  color: var(--point-color);
+}
+
+.history-btn.active {
+  background: var(--point-color);
+  color: white;
+  border-color: var(--point-color);
+}
+
+.history-page {
+  background: var(--card-bg);
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  width: 100%;
+}
+
+.history-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: var(--text-color);
+}
+
+.history-icon {
+  color: var(--point-color);
+}
+
+.history-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: var(--bg-color);
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  border-color: var(--point-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 80, 0.1);
+}
+
+.history-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-date {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+}
+
+.history-meaning {
+  font-size: 15px;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.history-arrow {
+  color: #ccc;
+  transition: color 0.2s;
+}
+
+.history-item:hover .history-arrow {
+  color: var(--point-color);
+}
+
+.history-empty, .history-loading {
+  text-align: center;
+  padding: 40px 0;
+  color: #888;
+  font-size: 15px;
+}

@@ -182,3 +182,22 @@ export const fetchDailyContent = async (language, date, level) => {
     words: targetContent.words
   };
 };
+
+export const fetchAllHistory = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('daily_content')
+      .select('date, base_meaning')
+      .order('date', { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Error fetching history:', error);
+    throw new Error('과거 기록을 불러오는 데 실패했습니다.');
+  }
+};
+

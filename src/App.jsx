@@ -5,10 +5,12 @@ import SentenceCard from './components/SentenceCard';
 import WordCard from './components/WordCard';
 import SkeletonCard from './components/SkeletonCard';
 import LanguageSelector from './components/LanguageSelector';
+import HistoryPage from './components/HistoryPage';
 import { fetchDailyContent, fetchMasterDailyContent } from './services/geminiService';
 
 function App() {
   const [date, setDate] = useState('');
+  const [currentView, setCurrentView] = useState('home'); // 'home' | 'history'
   const [level, setLevel] = useState('초급');
   // Store full language object: { id, label, code, emoji }
   const [selectedLanguage, setSelectedLanguage] = useState(null);
@@ -86,6 +88,18 @@ function App() {
     setError(null);
   };
 
+  const handleToggleHistory = () => {
+    setCurrentView(prev => prev === 'home' ? 'history' : 'home');
+  };
+
+  const handleSelectHistoryDate = (selectedDate) => {
+    setDate(selectedDate);
+    setCurrentView('home');
+    if (selectedLanguage) {
+      setData(null); // Re-trigger loading for new date
+    }
+  };
+
   // If no language selected, show language selector
   if (!selectedLanguage) {
     return (
@@ -93,13 +107,19 @@ function App() {
         <Header 
           date={date} 
           title="오늘의 외국어" 
+          onToggleHistory={handleToggleHistory}
+          isHistoryView={currentView === 'history'}
         />
         <div style={{ margin: 'auto 0', display: 'flex', justifyContent: 'center' }}>
-          <LanguageSelector 
-            onSelect={handleLanguageSelect} 
-            baseMeaning={baseMeaning} 
-            isLoading={isBaseMeaningLoading}
-          />
+          {currentView === 'history' ? (
+            <HistoryPage onSelectDate={handleSelectHistoryDate} />
+          ) : (
+            <LanguageSelector 
+              onSelect={handleLanguageSelect} 
+              baseMeaning={baseMeaning} 
+              isLoading={isBaseMeaningLoading}
+            />
+          )}
         </div>
         <footer className="app-footer">
           <p>행복ICT 사우분들의 매일매일 성장을 응원합니다 🚀</p>
@@ -114,22 +134,30 @@ function App() {
         date={date} 
         title={`하루 ${selectedLanguage.label}`} 
         onChangeLanguage={handleChangeLanguage} 
+        onToggleHistory={handleToggleHistory}
+        isHistoryView={currentView === 'history'}
       />
       
       <main className="main-content">
-        <LevelSelector currentLevel={level} onLevelChange={handleLevelChange} />
-        
-        {error && <div className="error-message">{error}</div>}
-        
-        {isLoading ? (
-          <>
-            <SkeletonCard />
-            <SkeletonCard />
-          </>
+        {currentView === 'history' ? (
+          <HistoryPage onSelectDate={handleSelectHistoryDate} />
         ) : (
           <>
-            <SentenceCard data={data} langCode={selectedLanguage.code} />
-            <WordCard data={data} langCode={selectedLanguage.code} />
+            <LevelSelector currentLevel={level} onLevelChange={handleLevelChange} />
+            
+            {error && <div className="error-message">{error}</div>}
+            
+            {isLoading ? (
+              <>
+                <SkeletonCard />
+                <SkeletonCard />
+              </>
+            ) : (
+              <>
+                <SentenceCard data={data} langCode={selectedLanguage.code} />
+                <WordCard data={data} langCode={selectedLanguage.code} />
+              </>
+            )}
           </>
         )}
       </main>
