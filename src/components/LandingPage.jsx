@@ -38,7 +38,7 @@ const LandingPage = ({ onStart }) => {
       <section className="landing-hero">
         <div className="landing-hero-badge">
           <Globe size={14} />
-          행복ICT 임직원 전용
+          모두의 하루를 위한
         </div>
         <h1 className="landing-title">
           하루 1분<br />

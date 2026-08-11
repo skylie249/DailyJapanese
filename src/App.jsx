@@ -212,7 +212,7 @@ function App() {
         />
         <LandingPage onStart={() => setShowLanding(false)} />
         <footer className="app-footer">
-          <p>행복ICT 사우분들의 매일매일 성장을 응원합니다 🚀</p>
+          <p>모두의 매일매일 성장을 응원합니다 🚀</p>
         </footer>
         {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
       </div>
@@ -249,7 +249,7 @@ function App() {
           )}
         </div>
         <footer className="app-footer">
-          <p>행복ICT 사우분들의 매일매일 성장을 응원합니다 🚀</p>
+          <p>모두의 매일매일 성장을 응원합니다 🚀</p>
         </footer>
         {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
       </div>
@@ -305,7 +305,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>행복ICT 사우분들의 매일매일 성장을 응원합니다 🚀</p>
+        <p>모두의 매일매일 성장을 응원합니다 🚀</p>
       </footer>
 
       {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}

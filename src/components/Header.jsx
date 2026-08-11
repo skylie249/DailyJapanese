@@ -26,7 +26,7 @@ const Header = ({
           ) : (
             <h1 className="logo">{title}</h1>
           )}
-          <p className="header-subtitle">행복ICT 임직원을 위한 하루 1분 외국어</p>
+          <p className="header-subtitle">모두의 하루 1분 외국어</p>
         </div>
         <div className="header-actions">
           {onChangeLanguage && (
