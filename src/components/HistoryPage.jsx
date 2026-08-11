@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, ChevronRight } from 'lucide-react';
 import { fetchAllHistory } from '../services/geminiService';
+import { t } from '../utils/i18n';
 
 const HistoryPage = ({ onSelectDate }) => {
   const [historyList, setHistoryList] = useState([]);
@@ -26,15 +27,15 @@ const HistoryPage = ({ onSelectDate }) => {
     <div className="history-page">
       <h2 className="history-title">
         <Calendar size={20} className="history-icon" />
-        과거 기록
+        {t('card.history')}
       </h2>
       
       {isLoading ? (
-        <div className="history-loading">기록을 불러오는 중입니다...</div>
+        <div className="history-loading">{t('lang.loading')}</div>
       ) : error ? (
-        <div className="error-message">{error}</div>
+        <div className="error-message">{t('common.error')}</div>
       ) : historyList.length === 0 ? (
-        <div className="history-empty">저장된 기록이 없습니다.</div>
+        <div className="history-empty">{t('history.empty')}</div>
       ) : (
         <ul className="history-list">
           {historyList.map((item) => (

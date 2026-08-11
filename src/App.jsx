@@ -17,6 +17,7 @@ import {
   checkIsFavorite,
 } from './services/favoritesService';
 import { onAuthStateChange, signOut } from './services/authService';
+import { t } from './utils/i18n';
 
 function App() {
   const [date, setDate] = useState('');
@@ -96,7 +97,7 @@ function App() {
           setBaseMeaning(result.base_meaning);
         }
       } catch (err) {
-        setError(err.message || '데이터를 불러오는 데 실패했습니다.');
+        setError(err.message || t('common.error'));
         console.error(err);
       } finally {
         setIsLoading(false);
@@ -205,14 +206,14 @@ function App() {
       <div className="app-container">
         <Header
           date={date}
-          title="오늘의 외국어"
+          title={t('app.header.title')}
           user={user}
           onLoginClick={() => setShowLoginModal(true)}
           onLogout={handleLogout}
         />
         <LandingPage onStart={() => setShowLanding(false)} />
         <footer className="app-footer">
-          <p>모두의 매일매일 성장을 응원합니다 🚀</p>
+          <p>{t('app.footer.slogan')}</p>
         </footer>
         {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
       </div>
@@ -225,7 +226,7 @@ function App() {
       <div className="app-container">
         <Header
           date={date}
-          title="오늘의 외국어"
+          title={t('app.header.title')}
           onToggleHistory={handleToggleHistory}
           isHistoryView={currentView === 'history'}
           onToggleFavorites={handleToggleFavorites}
@@ -249,7 +250,7 @@ function App() {
           )}
         </div>
         <footer className="app-footer">
-          <p>모두의 매일매일 성장을 응원합니다 🚀</p>
+          <p>{t('app.footer.slogan')}</p>
         </footer>
         {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
       </div>
@@ -260,7 +261,7 @@ function App() {
     <div className="app-container">
       <Header
         date={date}
-        title={`하루 ${selectedLanguage.label}`}
+        title={t('app.header.daily', { lang: t(selectedLanguage.labelKey) })}
         onChangeLanguage={handleChangeLanguage}
         onToggleHistory={handleToggleHistory}
         isHistoryView={currentView === 'history'}
@@ -305,7 +306,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>모두의 매일매일 성장을 응원합니다 🚀</p>
+        <p>{t('app.footer.slogan')}</p>
       </footer>
 
       {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}

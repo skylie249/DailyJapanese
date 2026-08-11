@@ -1,9 +1,11 @@
-import React from 'react';
-import { Globe, History, Star, User, LogOut, LogIn, Home } from 'lucide-react';
+import React, { useState } from 'react';
+import { Globe, History, Star, User, LogOut, LogIn, Home, Mic } from 'lucide-react';
+import { t } from '../utils/i18n';
+import VoiceTranslatorModal from './VoiceTranslatorModal';
 
 const Header = ({
   date,
-  title = "하루 일어",
+  title,
   onChangeLanguage,
   onToggleHistory,
   isHistoryView,
@@ -14,26 +16,24 @@ const Header = ({
   onLogout,
   onGoHome,
 }) => {
+  const [showTranslator, setShowTranslator] = useState(false);
+  const displayTitle = title || t('app.header.title');
+
   return (
     <header className="app-header">
       <div className="header-left">
         <div className="header-titles">
           {onGoHome ? (
-            <button className="logo-home-btn" onClick={onGoHome} aria-label="메인 페이지로 이동" title="메인으로">
+            <button className="logo-home-btn" onClick={onGoHome} aria-label="Home" title="Home">
               <Home size={16} className="logo-home-icon" />
-              <h1 className="logo">{title}</h1>
+              <h1 className="logo">{displayTitle}</h1>
             </button>
           ) : (
-            <h1 className="logo">{title}</h1>
+            <h1 className="logo">{displayTitle}</h1>
           )}
-          <p className="header-subtitle">모두의 하루 1분 외국어</p>
+          <p className="header-subtitle">{t('app.header.subtitle')}</p>
         </div>
         <div className="header-actions">
-          {onChangeLanguage && (
-            <button className="change-lang-btn" onClick={onChangeLanguage} aria-label="Change Language">
-              <Globe size={18} />
-            </button>
-          )}
           {onToggleFavorites && (
             <button
               className={`history-btn ${isFavoritesView ? 'active' : ''}`}
@@ -78,9 +78,25 @@ const Header = ({
               <LogIn size={18} />
             </button>
           )}
+          <button
+            className="history-btn"
+            onClick={() => setShowTranslator(true)}
+            title={t('landing.hero.translator')}
+            aria-label={t('landing.hero.translator')}
+          >
+            <Mic size={18} />
+          </button>
+          {onChangeLanguage && (
+            <button className="change-lang-btn" onClick={onChangeLanguage} aria-label="Change Language">
+              <Globe size={18} />
+            </button>
+          )}
         </div>
       </div>
       <div className="date-badge">{date}</div>
+      {showTranslator && (
+        <VoiceTranslatorModal onClose={() => setShowTranslator(false)} />
+      )}
     </header>
   );
 };

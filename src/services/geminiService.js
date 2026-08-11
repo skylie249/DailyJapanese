@@ -57,7 +57,7 @@ export const fetchMasterDailyContent = async (date) => {
   const prompt = `
 [역할 및 목적]
 당신은 다국어 교육 전문가입니다.
-오늘 학습할 단 하나의 명언(한국어 기준)을 생성하고, 이를 3개 언어(영어, 일본어, 중국어) 및 각 언어별 3가지 난이도(초급, 중급, 고급)에 맞게 번역 및 변환해주세요.
+오늘 학습할 단 하나의 명언(한국어 기준)을 생성하고, 이를 4개 언어(영어, 일본어, 중국어, 한국어) 및 각 언어별 3가지 난이도(초급, 중급, 고급)에 맞게 번역 및 변환해주세요.
 ${pastMeaningsText}
 [입력 조건]
 - 대상 날짜: ${date}
@@ -68,14 +68,16 @@ ${pastMeaningsText}
 - 고급: 관용구나 고급 표현이 포함된 복잡한 문장 및 심화 어휘 (CEFR C1-C2, JLPT N1, HSK 5-6급)
 
 [필드별 작성 규칙]
-1. original_text: 해당 언어의 정식 표기법 준수 (일본어: 한자+가나 혼용 / 중국어: 간체자)
+1. original_text: 해당 언어의 정식 표기법 준수 (일본어: 한자+가나 혼용 / 중국어: 간체자 / 한국어: 한글)
 2. reading_hint: 
    - 일본어: 전체 요미가나(히라가나)
    - 중국어: 성조가 포함된 한어병음
    - 영어: IPA 발음 기호
-3. pronunciation: 한국인 학습자를 위한 자연스러운 한글 발음 표기
-4. audio_text: TTS(음성합성)가 읽을 수 있는 순수 텍스트
-5. words: 문장에 실제 사용된 핵심 단어 3~5개
+   - 한국어: 로마자 표기법 (Romaja)
+3. pronunciation: 한국인 학습자를 위한 자연스러운 한글 발음 표기 (단, 한국어인 경우 외국인 학습자를 위한 영문 발음 표기)
+4. meaning: 해당 문장의 의미. (영어/일본어/중국어는 한국어로 작성, 한국어는 영어로 작성)
+5. audio_text: TTS(음성합성)가 읽을 수 있는 순수 텍스트
+6. words: 문장에 실제 사용된 핵심 단어 3~5개. (words 안의 meaning 속성도 위 4번 규칙과 동일하게 적용)
 
 [출력 형식 제한]
 반드시 아래 지정된 JSON 구조로만 응답하세요. 마크다운 텍스트(\`\`\`json 등)나 부연 설명을 포함하지 마세요.
@@ -94,6 +96,11 @@ ${pastMeaningsText}
       "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
     },
     "중국어": {
+      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
+    },
+    "한국어": {
       "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
       "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
       "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }

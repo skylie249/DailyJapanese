@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Star, ChevronRight, Trash2, LogIn } from 'lucide-react';
 import TTSAudioButton from './TTSAudioButton';
 import { getFavorites, removeFavorite } from '../services/favoritesService';
+import { t } from '../utils/i18n';
 
 const FavoritesPage = ({ onSelectDate, user, onLoginClick }) => {
   const [favorites, setFavorites] = useState([]);
@@ -54,26 +55,25 @@ const FavoritesPage = ({ onSelectDate, user, onLoginClick }) => {
     <div className="favorites-page">
       <h2 className="history-title">
         <Star size={20} className="history-icon" fill="currentColor" />
-        즐겨찾기
+        {t('card.favorites')}
       </h2>
 
       {!user ? (
         <div className="fav-login-prompt">
           <Star size={36} className="fav-login-star" />
-          <p className="fav-login-msg">즐겨찾기를 사용하려면 로그인이 필요합니다.</p>
+          <p className="fav-login-msg">{t('favorites.login.msg')}</p>
           <button className="fav-login-btn" onClick={onLoginClick}>
             <LogIn size={16} />
-            로그인하기
+            {t('favorites.login.btn')}
           </button>
         </div>
       ) : isLoading ? (
-        <div className="history-loading">즐겨찾기를 불러오는 중입니다...</div>
+        <div className="history-loading">{t('lang.loading')}</div>
       ) : error ? (
-        <div className="error-message">{error}</div>
+        <div className="error-message">{t('common.error')}</div>
       ) : favorites.length === 0 ? (
         <div className="history-empty">
-          <p>저장된 즐겨찾기가 없습니다.</p>
-          <p style={{ marginTop: '8px', fontSize: '13px' }}>카드의 ⭐ 버튼을 눌러 저장해보세요!</p>
+          <p>{t('favorites.empty')}</p>
         </div>
       ) : (
         <ul className="favorites-list">
@@ -143,7 +143,7 @@ const FavoritesPage = ({ onSelectDate, user, onLoginClick }) => {
 
                     {item.words && item.words.length > 0 && (
                       <div className="fav-words-block">
-                        <p className="fav-words-label">오늘의 단어</p>
+                        <p className="fav-words-label">{t('card.words')}</p>
                         <ul className="word-list">
                           {item.words.map((wordObj, idx) => (
                             <li key={idx} className="word-item">
@@ -170,7 +170,7 @@ const FavoritesPage = ({ onSelectDate, user, onLoginClick }) => {
                       className="fav-goto-btn"
                       onClick={() => onSelectDate(item.date)}
                     >
-                      이 날짜로 이동 →
+                      →
                     </button>
                   </div>
                 )}

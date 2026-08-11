@@ -1,21 +1,25 @@
 import React from 'react';
+import { t } from '../utils/i18n';
 
-const languages = [
-  { id: '영어', label: '영어', code: 'en-US', emoji: '🇺🇸' },
-  { id: '중국어', label: '중국어', code: 'zh-CN', emoji: '🇨🇳' },
-  { id: '일본어', label: '일본어', code: 'ja-JP', emoji: '🇯🇵' }
+const getLanguages = () => [
+  { id: '한국어', labelKey: 'lang.ko', code: 'ko-KR', emoji: '🇰🇷' },
+  { id: '영어', labelKey: 'lang.en', code: 'en-US', emoji: '🇺🇸' },
+  { id: '중국어', labelKey: 'lang.zh', code: 'zh-CN', emoji: '🇨🇳' },
+  { id: '일본어', labelKey: 'lang.ja', code: 'ja-JP', emoji: '🇯🇵' }
 ];
 
 const LanguageSelector = ({ onSelect, baseMeaning, isLoading }) => {
+  const languages = getLanguages();
+  
   return (
     <div className="language-selector-container">
       <h2>
         {isLoading ? (
-          "오늘의 문장을 가져오는 중입니다..."
+          t('lang.loading')
         ) : baseMeaning ? (
           `"${baseMeaning}"`
         ) : (
-          <>배우고 싶은 언어를<br/>선택해 주세요</>
+          <span style={{ whiteSpace: 'pre-line' }}>{t('lang.select.prompt')}</span>
         )}
       </h2>
       <div className="language-list">
@@ -26,7 +30,7 @@ const LanguageSelector = ({ onSelect, baseMeaning, isLoading }) => {
             onClick={() => onSelect(lang)}
           >
             <span className="lang-emoji">{lang.emoji}</span>
-            <span className="lang-label">{lang.label}</span>
+            <span className="lang-label">{t(lang.labelKey)}</span>
           </button>
         ))}
       </div>

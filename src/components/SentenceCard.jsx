@@ -1,22 +1,29 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 import TTSAudioButton from './TTSAudioButton';
+import { t } from '../utils/i18n';
 
 const SentenceCard = ({ data, langCode, isFavorite, onToggleFavorite, isFavoriteLoading }) => {
   if (!data || !data.sentence) return null;
 
   const { sentence, level } = data;
+  
+  const levelKeys = {
+    '초급': 'level.beginner',
+    '중급': 'level.intermediate',
+    '고급': 'level.advanced'
+  };
 
   return (
     <div className="card sentence-card">
       <div className="card-header">
-        <span className="level-tag">{level}</span>
+        <span className="level-tag">{t(levelKeys[level] || level)}</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <button
             className={`favorite-btn ${isFavorite ? 'active' : ''}`}
             onClick={onToggleFavorite}
             disabled={isFavoriteLoading}
-            aria-label={isFavorite ? '즐겨찾기 해제' : '즐겨찾기 추가'}
+            aria-label="Toggle Favorite"
           >
             <Star size={18} fill={isFavorite ? 'currentColor' : 'none'} />
           </button>

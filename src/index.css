@@ -108,7 +108,7 @@ body {
 }
 
 .logo {
-  font-size: clamp(18px, 4vw, 24px);
+  font-size: clamp(15px, 3.5vw, 20px);
   font-weight: 700;
   color: var(--text-color);
   white-space: nowrap;
@@ -1285,6 +1285,15 @@ rt {
 
 .landing-cta-btn:hover .landing-cta-arrow {
   transform: translateX(4px);
+}
+
+/* CTA Button Row */
+.landing-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Secondary CTA */
