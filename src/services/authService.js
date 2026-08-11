@@ -5,11 +5,13 @@ import { supabase } from '../lib/supabaseClient';
  * @param {string} email - 사용자 이메일
  */
 export const signInWithMagicLink = async (email) => {
+  const redirectUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
+  
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
       // 이메일 링크 클릭 후 돌아올 URL
-      emailRedirectTo: window.location.origin,
+      emailRedirectTo: redirectUrl,
     },
   });
 
