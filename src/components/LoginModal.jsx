@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Mail, X, ArrowRight, CheckCircle, AlertCircle } from 'lucide-react';
 import { signInWithMagicLink } from '../services/authService';
 import { t } from '../utils/i18n';
@@ -12,6 +12,8 @@ const LoginModal = ({ onClose }) => {
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [sendError, setSendError] = useState('');
+  const [cooldown, setCooldown] = useState(0); // 재발송 쿨다운 (초)
+  const cooldownRef = useRef(null);
 
   const validateEmail = useCallback((value) => {
     if (!value) {
@@ -21,6 +23,27 @@ const LoginModal = ({ onClose }) => {
       return t('login.error.invalid');
     }
     return '';
+  }, []);
+
+  // 쿨다운 타이머
+  const startCooldown = useCallback((seconds = 60) => {
+    setCooldown(seconds);
+    if (cooldownRef.current) clearInterval(cooldownRef.current);
+    cooldownRef.current = setInterval(() => {
+      setCooldown(prev => {
+        if (prev <= 1) {
+          clearInterval(cooldownRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (cooldownRef.current) clearInterval(cooldownRef.current);
+    };
   }, []);
 
   const handleEmailChange = (e) => {
@@ -43,6 +66,7 @@ const LoginModal = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (cooldown > 0) return;
     const error = validateEmail(email);
     if (error) {
       setEmailError(error);
@@ -54,8 +78,15 @@ const LoginModal = ({ onClose }) => {
     try {
       await signInWithMagicLink(email);
       setIsSent(true);
+      startCooldown(60);
     } catch (err) {
-      setSendError(err.message || t('common.error'));
+      const msg = err.message || '';
+      if (msg.toLowerCase().includes('rate limit') || msg.toLowerCase().includes('too many')) {
+        setSendError(t('login.error.ratelimit'));
+        startCooldown(60);
+      } else {
+        setSendError(msg || t('common.error'));
+      }
     } finally {
       setIsSending(false);
     }
@@ -88,8 +119,11 @@ const LoginModal = ({ onClose }) => {
                 setIsSent(false);
                 setSendError('');
               }}
+              disabled={cooldown > 0}
             >
-              {t('login.resend')}
+              {cooldown > 0
+                ? t('login.resend.cooldown').replace('{sec}', cooldown)
+                : t('login.resend')}
             </button>
           </div>
         ) : (
@@ -136,12 +170,16 @@ const LoginModal = ({ onClose }) => {
             <button
               type="submit"
               className="login-submit-btn"
-              disabled={!isEmailValid || isSending}
+              disabled={!isEmailValid || isSending || cooldown > 0}
             >
               {isSending ? (
                 <span className="login-btn-loading">
                   <span className="login-spinner" />
                   {t('login.submit.sending')}
+                </span>
+              ) : cooldown > 0 ? (
+                <span className="login-btn-content">
+                  {t('login.submit.cooldown').replace('{sec}', cooldown)}
                 </span>
               ) : (
                 <span className="login-btn-content">

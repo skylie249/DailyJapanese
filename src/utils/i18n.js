@@ -78,6 +78,9 @@ const translations = {
     'login.sent.sub': 'You can close this window now.',
     'login.resend': 'Resend Email',
     'login.error.invalid': 'Please enter a valid email address.',
+    'login.error.ratelimit': 'Too many requests. Please wait 1 minute before trying again.',
+    'login.submit.cooldown': 'Please wait {sec}s...',
+    'login.resend.cooldown': 'Resend available in {sec}s',
 
     // Common
     'common.error': 'Failed to load data.',
@@ -163,6 +166,9 @@ const translations = {
     'login.sent.sub': '이 창은 닫으셔도 됩니다.',
     'login.resend': '이메일 다시 보내기',
     'login.error.invalid': '올바른 이메일 주소를 입력해주세요.',
+    'login.error.ratelimit': '이메일 발송 횟수 제한에 도달했습니다. 1분 후 다시 시도해 주세요.',
+    'login.submit.cooldown': '{sec}초 후 재시도 가능',
+    'login.resend.cooldown': '{sec}초 후 재발송 가능',
 
     // Common
     'common.error': '데이터를 불러오는 데 실패했습니다.',
