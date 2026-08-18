@@ -5,7 +5,8 @@ const getLanguages = () => [
   { id: '한국어', labelKey: 'lang.ko', code: 'ko-KR', emoji: '🇰🇷' },
   { id: '영어', labelKey: 'lang.en', code: 'en-US', emoji: '🇺🇸' },
   { id: '중국어', labelKey: 'lang.zh', code: 'zh-CN', emoji: '🇨🇳' },
-  { id: '일본어', labelKey: 'lang.ja', code: 'ja-JP', emoji: '🇯🇵' }
+  { id: '일본어', labelKey: 'lang.ja', code: 'ja-JP', emoji: '🇯🇵' },
+  { id: '베트남어', labelKey: 'lang.vi', code: 'vi-VN', emoji: '🇻🇳' }
 ];
 
 const LanguageSelector = ({ onSelect, baseMeaning, isLoading }) => {

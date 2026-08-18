@@ -19,7 +19,7 @@ const translations = {
     'landing.hero.cta': 'Start learning today',
     'landing.features.title': 'Key Features',
     'landing.features.f1.title': 'Various languages',
-    'landing.features.f1.desc': 'Learn sentences and words in Japanese, English, Chinese, and Korean.',
+    'landing.features.f1.desc': 'Learn sentences and words in Japanese, English, Chinese, Korean, and Vietnamese.',
     'landing.features.f2.title': 'Native pronunciation',
     'landing.features.f2.desc': 'Listen to native pronunciations with TTS technology.',
     'landing.features.f3.title': 'Save favorites',
@@ -47,6 +47,7 @@ const translations = {
     'lang.en': 'English',
     'lang.ja': 'Japanese',
     'lang.zh': 'Chinese',
+    'lang.vi': 'Vietnamese',
 
     // Level Selector
     'level.beginner': 'Beginner',
@@ -107,7 +108,7 @@ const translations = {
     'landing.hero.cta': '오늘 학습 시작하기',
     'landing.features.title': '주요 기능',
     'landing.features.f1.title': '다양한 언어 지원',
-    'landing.features.f1.desc': '일본어, 영어, 중국어, 한국어의 오늘의 문장과 단어를 학습할 수 있어요.',
+    'landing.features.f1.desc': '일본어, 영어, 중국어, 한국어, 베트남어의 오늘의 문장과 단어를 학습할 수 있어요.',
     'landing.features.f2.title': '원어민 발음 듣기',
     'landing.features.f2.desc': 'TTS 기술로 원어민 발음을 바로 들으며 정확한 발음을 익힐 수 있어요.',
     'landing.features.f3.title': '즐겨찾기 저장',
@@ -135,6 +136,7 @@ const translations = {
     'lang.en': '영어',
     'lang.ja': '일본어',
     'lang.zh': '중국어',
+    'lang.vi': '베트남어',
 
     // Level Selector
     'level.beginner': '초급',
