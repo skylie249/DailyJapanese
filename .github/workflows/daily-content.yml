@@ -1,0 +1,37 @@
+name: Generate Daily Content
+
+on:
+  schedule:
+    # 매일 KST 00:10 (UTC 15:10, 전날) 에 실행 — 자정 직후 사용자가 접속하기 전에 미리 캐시를 채워둡니다.
+    - cron: '10 15 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  trigger-generation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call daily-content API to warm today's cache
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            echo "::error::SITE_URL secret이 설정되어 있지 않습니다. 저장소 Settings > Secrets and variables > Actions에서 등록하세요."
+            exit 1
+          fi
+
+          TODAY=$(TZ='Asia/Seoul' date +%F)
+          URL="${SITE_URL%/}/api/daily-content?date=${TODAY}"
+          echo "Requesting: $URL"
+
+          for attempt in 1 2 3; do
+            if curl -sf --max-time 60 "$URL" -o response.json; then
+              echo "Success on attempt $attempt"
+              cat response.json
+              exit 0
+            fi
+            echo "Attempt $attempt failed, retrying in 10s..."
+            sleep 10
+          done
+
+          echo "::error::daily-content API 호출이 3회 모두 실패했습니다."
+          exit 1
