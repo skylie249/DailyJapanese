@@ -39,6 +39,10 @@ body {
   flex-direction: column;
 }
 
+.main-content {
+  min-width: 0;
+}
+
 /* Header */
 .app-header {
   display: flex;
@@ -182,6 +186,8 @@ body {
   box-shadow: 0 4px 12px var(--shadow-color);
   overflow-wrap: break-word;
   word-break: break-all;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .card-header {
@@ -213,10 +219,18 @@ body {
   margin-bottom: var(--space-sm);
   line-height: 1.4;
   word-break: break-all;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  /* Safari는 <ruby>를 줄바꿈 불가능한 하나의 덩어리로 렌더링할 때가 있어,
+     그럴 경우 카드 밖으로 넘치는 대신 자체 스크롤로 흡수한다 */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 ruby {
   ruby-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 rt {
