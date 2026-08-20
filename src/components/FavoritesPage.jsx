@@ -121,12 +121,12 @@ const FavoritesPage = ({ onSelectDate, user, onLoginClick }) => {
                     <div className="fav-sentence-block">
                       <div className="fav-sentence-row">
                         <div className="japanese-text fav-sentence-text">
-                          <ruby>
-                            {item.sentence.original_text}
-                            {item.sentence.reading_hint && (
-                              <rt>{item.sentence.reading_hint}</rt>
-                            )}
-                          </ruby>
+                          {item.sentence.reading_hint && (
+                            <div className="reading-hint">
+                              {item.sentence.reading_hint}
+                            </div>
+                          )}
+                          <div>{item.sentence.original_text}</div>
                         </div>
                         <TTSAudioButton
                           text={item.sentence.audio_text || item.sentence.original_text}

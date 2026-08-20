@@ -221,21 +221,19 @@ body {
   word-break: break-all;
   overflow-wrap: anywhere;
   max-width: 100%;
-  /* Safari는 <ruby>를 줄바꿈 불가능한 하나의 덩어리로 렌더링할 때가 있어,
-     그럴 경우 카드 밖으로 넘치는 대신 자체 스크롤로 흡수한다 */
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
-ruby {
-  ruby-align: center;
-  overflow-wrap: anywhere;
-  word-break: break-all;
-}
-
-rt {
-  font-size: clamp(10px, 2.5vw, 12px);
+/* reading_hint(문장 전체 읽는 법)는 특정 글자에 정렬되는 주석이 아니라
+   문장 전체에 대한 참고용 텍스트라 <ruby>/<rt> 대신 일반 블록으로 표시한다.
+   Safari(WebKit)는 <ruby>를 줄바꿈 불가능한 덩어리로 렌더링해 카드 밖으로
+   문장이 넘치는 문제가 있어, 각자 독립적으로 줄바꿈되는 블록으로 대체했다. */
+.reading-hint {
+  font-size: clamp(11px, 2.8vw, 13px);
+  font-weight: 500;
   color: #666;
+  margin-bottom: 2px;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .pronunciation {

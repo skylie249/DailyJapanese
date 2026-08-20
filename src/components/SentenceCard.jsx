@@ -32,10 +32,10 @@ const SentenceCard = ({ data, langCode, isFavorite, onToggleFavorite, isFavorite
       </div>
       
       <div className="japanese-text">
-        <ruby>
-          {sentence.original_text}
-          {sentence.reading_hint && <rt>{sentence.reading_hint}</rt>}
-        </ruby>
+        {sentence.reading_hint && (
+          <div className="reading-hint">{sentence.reading_hint}</div>
+        )}
+        <div>{sentence.original_text}</div>
       </div>
       
       {sentence.pronunciation && (
