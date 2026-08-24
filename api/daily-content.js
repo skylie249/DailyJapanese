@@ -1,5 +1,6 @@
 // api/daily-content.js
 import { createClient } from '@supabase/supabase-js';
+import { generateText } from './_lib/aiClient.js';
 
 // 서버 전용 키 (VITE_ 접두사 없음 → 클라이언트 번들에 절대 포함되지 않음)
 const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
@@ -129,34 +130,13 @@ export default async function handler(req, res) {
     console.error('Failed to fetch past contents:', e);
   }
 
-  // 3. Gemini API 호출
-  const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: 'GEMINI_API_KEY is not configured on the server' });
+  // 3. AI API 호출 (Gemini, 429 발생 시 OpenRouter로 자동 폴백)
+  if (!process.env.GEMINI_API_KEY && !process.env.VITE_GEMINI_API_KEY && !process.env.OPENROUTER_API_KEY) {
+    return res.status(500).json({ error: 'GEMINI_API_KEY(또는 OPENROUTER_API_KEY)가 서버에 설정되어 있지 않습니다.' });
   }
 
-  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
-
   try {
-    const response = await fetch(GEMINI_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: buildPrompt(date, pastMeanings) }] }],
-        generationConfig: {
-          responseMimeType: 'application/json',
-          temperature: 0.7,
-        },
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error?.message || 'Failed to fetch from Gemini API');
-    }
-
-    const responseData = await response.json();
-    let textContent = responseData.candidates[0].content.parts[0].text;
+    let textContent = await generateText(buildPrompt(date, pastMeanings), { json: true });
 
     const jsonMatch = textContent.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
