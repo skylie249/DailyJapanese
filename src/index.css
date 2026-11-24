@@ -247,6 +247,29 @@ body {
   font-weight: 500;
 }
 
+/* Answer (질문 문장에 대한 답변) */
+.answer-block {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--border-color);
+}
+
+.answer-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--point-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.answer-text {
+  font-size: clamp(17px, 5vw, 22px);
+}
+
 /* Words */
 .word-list {
   list-style: none;

@@ -59,6 +59,7 @@ const translations = {
     'card.words': 'WORDS',
     'card.history': 'HISTORY',
     'card.favorites': 'FAVORITES',
+    'card.answer': 'Answer',
 
     // History & Favorites
     'history.empty': 'No learning history for this date.',
@@ -148,6 +149,7 @@ const translations = {
     'card.words': '단어',
     'card.history': '학습 히스토리',
     'card.favorites': '즐겨찾기',
+    'card.answer': '답변',
 
     // History & Favorites
     'history.empty': '해당 날짜의 학습 기록이 없습니다.',

@@ -139,6 +139,30 @@ const FavoritesPage = ({ onSelectDate, user, onLoginClick }) => {
                         </div>
                       )}
                       <div className="meaning fav-meaning">{item.sentence.meaning}</div>
+
+                      {item.sentence.answer && item.sentence.answer.original_text && (
+                        <div className="answer-block">
+                          <div className="answer-label">
+                            <span>{t('card.answer')}</span>
+                            <TTSAudioButton
+                              text={item.sentence.answer.audio_text || item.sentence.answer.original_text}
+                              langCode={item.language_code}
+                            />
+                          </div>
+                          <div className="japanese-text answer-text fav-sentence-text">
+                            {item.sentence.answer.reading_hint && (
+                              <div className="reading-hint">{item.sentence.answer.reading_hint}</div>
+                            )}
+                            <div>{item.sentence.answer.original_text}</div>
+                          </div>
+                          {item.sentence.answer.pronunciation && (
+                            <div className="pronunciation fav-pronunciation">
+                              {item.sentence.answer.pronunciation}
+                            </div>
+                          )}
+                          <div className="meaning fav-meaning">{item.sentence.answer.meaning}</div>
+                        </div>
+                      )}
                     </div>
 
                     {item.words && item.words.length > 0 && (

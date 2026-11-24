@@ -39,6 +39,7 @@ ${pastMeaningsText}
 4. meaning: 해당 문장의 의미. (영어/일본어/중국어/베트남어는 한국어로 작성, 한국어는 영어로 작성)
 5. audio_text: TTS(음성합성)가 읽을 수 있는 순수 텍스트
 6. words: 문장에 실제 사용된 핵심 단어 3~5개. (words 안의 meaning 속성도 위 4번 규칙과 동일하게 적용)
+7. answer: 생성한 문장(original_text)이 질문(의문문)인 경우에만, 그 질문에 대한 자연스럽고 구체적인 답변 문장을 1~5번과 동일한 형식(original_text, reading_hint, pronunciation, meaning, audio_text)으로 작성하세요. 질문이 아닌 경우(평서문, 명령문 등)에는 answer를 null로 설정하세요.
 
 [출력 형식 제한]
 반드시 아래 지정된 JSON 구조로만 응답하세요. 마크다운 텍스트(\`\`\`json 등)나 부연 설명을 포함하지 마세요.
@@ -47,29 +48,29 @@ ${pastMeaningsText}
   "base_meaning": "오늘의 기준이 되는 실생활/여행 활용 문장 (한국어)",
   "content": {
     "영어": {
-      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
+      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
     },
     "일본어": {
-      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
+      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
     },
     "중국어": {
-      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
+      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
     },
     "한국어": {
-      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
+      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
     },
     "베트남어": {
-      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
-      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "" }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
+      "초급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "중급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] },
+      "고급": { "sentence": { "original_text": "", "reading_hint": "", "pronunciation": "", "meaning": "", "audio_text": "", "answer": null }, "words": [ { "word": "", "reading": "", "meaning": "", "audio_text": "" } ] }
     }
   }
 }
